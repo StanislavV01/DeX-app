@@ -1,0 +1,40 @@
+.btn {
+	border-radius: 20px;
+	width: 100%;
+	border: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.small {
+	font-size: 16px;
+
+	padding: 10px 16px;
+}
+
+.large {
+	font-size: 20px;
+	padding: 17px;
+}
+
+
+@media (max-width:769px) {
+	.large {
+		padding: 17px 40px;
+	}
+}
+
+.light {
+	background: rgba(251, 17, 142, 0.12);
+	color: #FB118E;
+}
+
+.dark {
+	background-color: #1c2c51;
+	color: #4c82fb;
+}
+
+.dark::hover {
+	background-color: (76, 130, 251, 0.24);
+}
