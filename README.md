@@ -28,6 +28,6 @@ If you are developing a production application, we recommend updating the config
 
 ### Start app in dev mode
      
-      ```npm install
+      npm install
       npm run dev
-      ```
+      
