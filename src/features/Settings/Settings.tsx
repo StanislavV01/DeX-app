@@ -21,9 +21,9 @@ function Settings({ handleCloseView, isView, className, ...props }: SettingsProp
 					initial={animationSideBlock.hidden}
 					animate={animationSideBlock.visible}
 					exit={'hidden'}
-
+					className={styles.wrapper}
 				>
-					<div className={classNames(className, styles.wrapper, {
+					<div className={classNames(className, {
 						[styles.dark]: mode === 'dark',
 					})}
 						{...props}>
