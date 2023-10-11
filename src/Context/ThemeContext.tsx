@@ -1,8 +1,8 @@
-import { Provider, ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useEffect, useState } from "react";
 
 export interface ThemeContextProps {
 	mode: string;
-	toggleMode: () => void;
+	toggleMode: (mode: string) => void;
 }
 type ThemeProviderProps = {
 	children: ReactNode
@@ -20,7 +20,12 @@ const ThemeProvider = ({ children }: ThemeProviderProps): JSX.Element => {
 
 	useEffect(() => {
 		const saveMode = window.localStorage.getItem('mode');
-		setMode(saveMode);
+		if (saveMode) {
+			setMode(saveMode);
+		} else {
+
+			setMode('light');
+		}
 
 	}, [])
 

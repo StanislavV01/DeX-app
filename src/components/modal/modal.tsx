@@ -2,18 +2,18 @@ import { ModalProps } from "./Modal.props";
 import styles from './Modal.module.css';
 import { ReactComponent as CloseIcon } from '@/assets/close-icon.svg';
 import classNames from "classnames";
-import { useContext, useRef } from "react";
+import { useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { animationModal } from "@/helpers/animationsVariants";
-import { ThemeContext } from "@/Context/ThemeContext";
+import { useTheme } from "@/hooks/useTheme";
 
 function modal({ children, title, isOpen, handleClose, className, ...props }: ModalProps): JSX.Element {
-	const { mode } = useContext(ThemeContext);
+	const { mode } = useTheme();
 
 	const modalRef = useRef<HTMLDivElement | null>(null)
 	const closeModal = (e: React.MouseEvent<HTMLElement>) => {
 
-		if (e.target != modalRef.current && !modalRef.current?.contains(e.target)) {
+		if (e.target != modalRef.current && !modalRef.current?.contains(e.target as Node)) {
 			handleClose()
 		}
 	}

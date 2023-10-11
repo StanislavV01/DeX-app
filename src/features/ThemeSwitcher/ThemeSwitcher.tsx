@@ -1,12 +1,11 @@
 import styles from './themeSwitcher.module.css';
 import { ReactComponent as LightModeIcon } from '@/assets/light-mode-icon.svg';
 import { ReactComponent as DarkModeIcon } from '@/assets/dark-mode-icon.svg';
-import { useContext } from 'react';
-import { ThemeContext } from '@/Context/ThemeContext';
 import classNames from 'classnames';
+import { useTheme } from '@/hooks/useTheme';
 
 function ThemeSwitcher() {
-	const { mode, toggleMode } = useContext(ThemeContext);
+	const { mode, toggleMode } = useTheme();
 
 	const renderModeIcon = (icon: React.ReactNode, modeName: string) => (
 		<div

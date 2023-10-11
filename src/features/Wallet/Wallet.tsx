@@ -19,7 +19,7 @@ function Wallet({ className, ...props }: WalletProps): JSX.Element {
 	const web3 = new Web3((window as any).ethereum);
 	const userAddress = wallet.accounts[0];
 
-	async function fetchContractBalance(contractAddress: string, token: string): Promise<string> {
+	async function fetchContractBalance(contractAddress: string): Promise<string> {
 		try {
 			const data = web3.eth.abi.encodeFunctionCall({
 				name: 'balanceOf',
@@ -43,21 +43,29 @@ function Wallet({ className, ...props }: WalletProps): JSX.Element {
 
 	useEffect(() => {
 		const fetchBalances = async () => {
-			const usdtBalance = await fetchContractBalance(getTokenContractAddress(activeChain.name, 'usdt'));
-			const usdcBalance = await fetchContractBalance(getTokenContractAddress(activeChain.name, 'usdc'));
-			const CRVBalance = await fetchContractBalance(getTokenContractAddress(activeChain.name, 'CRV'));
+			if (activeChain && activeChain.name) {
+				const tokenAddressUsdt = getTokenContractAddress(activeChain.name, 'usdt');
+				const tokenAddressUsdc = getTokenContractAddress(activeChain.name, 'usdc');
+				const tokenAddressCRV = getTokenContractAddress(activeChain.name, 'CRV');
 
-			setBalances({
-				usdt: usdtBalance,
-				usdc: usdcBalance,
-				CRV: CRVBalance,
-			});
+				if (tokenAddressUsdt && tokenAddressUsdc && tokenAddressCRV) {
+					const usdtBalance = await fetchContractBalance(tokenAddressUsdt);
+					const usdcBalance = await fetchContractBalance(tokenAddressUsdc);
+					const CRVBalance = await fetchContractBalance(tokenAddressCRV);
+
+					setBalances({
+						usdt: usdtBalance,
+						usdc: usdcBalance,
+						CRV: CRVBalance,
+					});
+				}
+			}
 		};
 
-		if (activeChain.name) {
+		if (activeChain && activeChain.name) {
 			fetchBalances();
 		}
-	}, [activeChain.name,]);
+	}, [activeChain?.name]);
 
 	return (
 		<div className={classNames(styles.Wallet, className)} {...props}>

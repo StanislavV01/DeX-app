@@ -1,12 +1,11 @@
 import SelectToken from '@/features/SelectToken/SelectToken';
 import styles from './Exchanger.module.css'
 import Button from '@/components/button/button';
-import { useContext } from 'react';
-import { ThemeContext } from '@/Context/ThemeContext';
 import Etherimage from '@/assets/etherium.png';
+import { useTheme } from '@/hooks/useTheme';
 
 function Exchanger() {
-	const { mode } = useContext(ThemeContext);
+	const { mode } = useTheme();
 
 	return <div className={styles.wrapper}>
 		<div className={styles.box}>

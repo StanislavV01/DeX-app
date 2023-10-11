@@ -12,8 +12,8 @@ const withPortal = ({ rootId, children }: withPortalProps) => {
 	useEffect(() => {
 		return () => {
 			window.requestAnimationFrame(() => {
-				if (target.current.childNodes.length === 0) {
-					target.current.remove();
+				if (target.current?.childNodes.length === 0) {
+					target.current?.remove();
 					target.current = null;
 				}
 			});

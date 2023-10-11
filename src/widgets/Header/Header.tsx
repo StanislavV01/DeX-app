@@ -1,17 +1,17 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import styles from './Header.module.css';
 import Search from '@/features/Search/Search';
 import Button from '@/components/button/button';
-import { ThemeContext } from '@/Context/ThemeContext';
 import Drawer from '../Drawer/Drawer';
 import ChainSwitcher from '@/features/ChainSwitcher/ChainSwitcher';
+import { useTheme } from '@/hooks/useTheme';
 
 
 
 function Header() {
-	const { mode } = useContext(ThemeContext);
+	const { mode } = useTheme();
 	const [open, setOpen] = useState<boolean>(false)
 	const handleClose = () => {
 		setOpen(false);

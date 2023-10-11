@@ -6,7 +6,7 @@ import Wallet from '@/features/Wallet/Wallet';
 import { DrawerProps } from './Drawer.props';
 import { AnimatePresence, motion } from 'framer-motion';
 import WithPortal from '@/components/withPortal/WithPortal';
-import Settings from '../Settings/Settings';
+import Settings from '../../features/Settings/Settings';
 import { animationSideBlock } from '@/helpers/animationsVariants';
 
 function Drawer({ handleClose, open }: DrawerProps): JSX.Element {

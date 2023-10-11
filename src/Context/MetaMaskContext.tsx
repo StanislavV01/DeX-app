@@ -1,10 +1,10 @@
 import React, { useState, useEffect, createContext, PropsWithChildren, useCallback } from 'react';
-import detectEthereumProvider from '@metamask/detect-provider';
+import detectEthereumProvider, { MetaMaskEthereumProvider } from '@metamask/detect-provider';
 import Web3 from 'web3';
 import { formatBalance } from '../helpers/formatUtills';
 import { blockchainInfo, blockchainInfoModel } from './blockChainInfo';
 
-interface WalletState {
+export interface WalletState {
 	accounts: string[];
 	balance: string;
 	chainId: string;
@@ -20,7 +20,7 @@ interface MetaMaskContextData {
 	connectMetaMask: () => void;
 	clearError: () => void;
 	switchBlockchain: (chainId: string) => void;
-	handleChange: () => void;
+	handleChange: (chainId: string) => void;
 }
 
 const disconnectedState: WalletState = { accounts: [], balance: '', chainId: '' };
@@ -59,28 +59,31 @@ export const MetaMaskContextProvider: React.FC<PropsWithChildren<{}>> = ({ child
 
 			const provider = new Web3(window.ethereum);
 			provider.eth.defaultAccount = accounts[0];
-			const balance = formatBalance(await provider.eth.getBalance(accounts[0]));
+			const balance = formatBalance((await provider.eth.getBalance(accounts[0])).toString());
 			const chainId = await provider.eth.getChainId();
 
 			setWallet({ accounts, balance, chainId: chainId.toString() });
-		} catch (error) {
+		} catch (error: any) {
 			setErrorMessage(error.message);
 		}
 	}, []);
 
 	const switchBlockchain = async (chainId: string) => {
-		console.log('ChainId:', chainId)
+		console.log('ChainId:', chainId);
 
 		try {
-			await ethereum.request({
-				method: 'wallet_switchEthereumChain',
-				params: [{ chainId: chainId }],
-			});
-
-		} catch (switchError) {
+			if (window.ethereum) {
+				await window.ethereum.request({
+					method: 'wallet_switchEthereumChain',
+					params: [{ chainId: chainId }],
+				});
+			} else {
+				console.log("MetaMask is not available.");
+				// Handle the case where MetaMask is not installed or not enabled.
+			}
+		} catch (switchError: any) {
 			if (switchError.code === 4902) {
-
-				console.log("Can't to switch blockhain")
+				console.log("Can't switch blockchain");
 			}
 		}
 	};
@@ -93,30 +96,12 @@ export const MetaMaskContextProvider: React.FC<PropsWithChildren<{}>> = ({ child
 		}
 	};
 
-	const connectToBlockchain = async (providerUrl: string) => {
-		const provider = new Web3(providerUrl);
-
-		try {
-			const accounts = await provider.eth.requestAccounts();
-			clearError();
-
-			provider.eth.defaultAccount = accounts[0];
-
-			const balance = formatBalance(await provider.eth.getBalance(accounts[0]));
-
-			setWallet({ accounts, balance, chainId: await provider.eth.getChainId() });
-		} catch (error) {
-			setErrorMessage(error.message);
-		}
-
-		setIsConnecting(false);
-	};
 
 	const updateWalletAndAccounts = useCallback(() => updateWallet(), [updateWallet]);
 
 	useEffect(() => {
 		const getProvider = async () => {
-			const provider = await detectEthereumProvider({ silent: true });
+			const provider = await detectEthereumProvider({ silent: true }) as MetaMaskEthereumProvider;
 			setHasProvider(Boolean(provider));
 
 			if (provider) {
@@ -138,23 +123,23 @@ export const MetaMaskContextProvider: React.FC<PropsWithChildren<{}>> = ({ child
 		setIsConnecting(true);
 
 		try {
-			const provider = await detectEthereumProvider();
+			const provider = await detectEthereumProvider() as MetaMaskEthereumProvider;
 
 			if (!provider) {
 				throw new Error('MetaMask not detected');
 			}
 
-			await provider.request({ method: 'eth_requestAccounts' });
+			await (provider as any).request({ method: 'eth_requestAccounts' });
 			clearError();
 
-			const chainId = await provider.request({ method: 'eth_chainId' });
+			const chainId = await (provider as any).request({ method: 'eth_chainId' });
 
 			if (!blockchainInfo[chainId]) {
 				throw new Error('Unsupported chain');
 			}
 
 			await switchBlockchain(chainId);
-		} catch (error) {
+		} catch (error: any) {
 			setErrorMessage(error.message);
 		}
 
