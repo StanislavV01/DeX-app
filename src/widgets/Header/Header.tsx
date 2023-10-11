@@ -5,7 +5,7 @@ import styles from './Header.module.css';
 import Search from '@/features/Search/Search';
 import Button from '@/components/button/button';
 import { ThemeContext } from '@/Context/ThemeContext';
-import Drawer from '../Drawer/Drawer';
+import Drawer from '@/features/Drawer';
 import ChainSwitcher from '@/features/ChainSwitcher/ChainSwitcher';
 
 
