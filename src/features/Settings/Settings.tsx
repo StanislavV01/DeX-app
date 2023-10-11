@@ -23,7 +23,7 @@ function Settings({ handleCloseView, isView, className, ...props }: SettingsProp
 					exit={'hidden'}
 					className={styles.wrapper}
 				>
-					<div className={classNames(className, {
+					<div className={classNames(className, styles.box, {
 						[styles.dark]: mode === 'dark',
 					})}
 						{...props}>
