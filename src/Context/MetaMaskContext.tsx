@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, PropsWithChildren, useCallback } from 'react';
-import detectEthereumProvider, { MetaMaskEthereumProvider } from '@metamask/detect-provider';
+import detectEthereumProvider from '@metamask/detect-provider';
 import Web3 from 'web3';
 import { formatBalance } from '../helpers/formatUtills';
 import { blockchainInfo, blockchainInfoModel } from './blockChainInfo';
@@ -101,7 +101,7 @@ export const MetaMaskContextProvider: React.FC<PropsWithChildren<{}>> = ({ child
 
 	useEffect(() => {
 		const getProvider = async () => {
-			const provider = await detectEthereumProvider({ silent: true }) as MetaMaskEthereumProvider;
+			const provider = await detectEthereumProvider({ silent: true }) as any;
 			setHasProvider(Boolean(provider));
 
 			if (provider) {
@@ -123,7 +123,7 @@ export const MetaMaskContextProvider: React.FC<PropsWithChildren<{}>> = ({ child
 		setIsConnecting(true);
 
 		try {
-			const provider = await detectEthereumProvider() as MetaMaskEthereumProvider;
+			const provider = await detectEthereumProvider() as any;
 
 			if (!provider) {
 				throw new Error('MetaMask not detected');
