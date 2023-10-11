@@ -1,0 +1,67 @@
+.container {
+	position: relative;
+}
+
+.switchBox {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px 10px;
+	border-radius: 25px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+
+.switchBox:hover {
+	background: var(--genie-colors-textSecondary);
+	transition: 0.3;
+}
+
+.chainLogo {
+	height: 30px;
+	width: 30px;
+}
+
+.arrowIcon {
+	margin-left: 5px;
+}
+
+.arrowIcon path {
+	fill: var(--genie-colors-textTertiary);
+
+}
+
+.chainBox {
+	width: 200px;
+	position: absolute;
+	margin-top: 10px;
+	right: 0px;
+	background: var(--genie-colors-searchBackground);
+	border-radius: 10px;
+	padding: 10px 5px;
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+.item {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px;
+	align-items: center;
+	cursor: pointer;
+}
+
+.itemImg img {
+	width: 20px;
+	height: 20px;
+}
+
+.itemName {
+	font-size: 16px;
+	text-transform: capitalize;
+}

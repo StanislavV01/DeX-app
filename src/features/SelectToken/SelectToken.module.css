@@ -1,0 +1,16 @@
+.selectBtn {
+	display: flex;
+	align-items: center;
+	text-align: center;
+	padding: 10px 20px;
+	border-radius: 16px;
+	background-color: rgb(76, 130, 251);
+	border: none;
+	color: #fff;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.selectBtn span {
+	margin-left: 10px;
+}
