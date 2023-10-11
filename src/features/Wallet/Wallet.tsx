@@ -33,11 +33,11 @@ function Wallet({ className, ...props }: WalletProps): JSX.Element {
 				data: data,
 			});
 
-			const balance = web3.utils.toBigInt(result).toString();
-			return web3.utils.fromWei(balance, 'ether');
+			const balance = web3.utils.toBigInt(result);
+			return web3.utils.fromWei(balance, 'ether').toString();
 		} catch (error) {
 			console.error('Error getting balance', error);
-			return '';
+
 		}
 	}
 
@@ -58,6 +58,7 @@ function Wallet({ className, ...props }: WalletProps): JSX.Element {
 						usdc: usdcBalance,
 						CRV: CRVBalance,
 					});
+					console.log(balances)
 				}
 			}
 		};
@@ -65,7 +66,7 @@ function Wallet({ className, ...props }: WalletProps): JSX.Element {
 		if (activeChain && activeChain.name) {
 			fetchBalances();
 		}
-	}, [activeChain?.name]);
+	}, [activeChain.chainId]);
 
 	return (
 		<div className={classNames(styles.Wallet, className)} {...props}>
@@ -78,9 +79,9 @@ function Wallet({ className, ...props }: WalletProps): JSX.Element {
 					</div>
 					<div className={styles.list}>
 						<div className={styles.item}>Eth balance: {wallet.balance}</div>
-						<div className={styles.item}>USDT balance: {formatBalance(balances.usdt)}</div>
-						<div className={styles.item}>USDC balance: {formatBalance(balances.usdc)}</div>
-						<div className={styles.item}>CRV balance: {formatBalance(balances.CRV)}</div>
+						<div className={styles.item}>USDT balance: {balances.usdt ? formatBalance(balances.usdt) : 'loading...'}</div>
+						<div className={styles.item}>USDC balance: {balances.usdc ? formatBalance(balances.usdc) : 'loading...'}</div>
+						<div className={styles.item}>CRV balance: {balances.CRV ? formatBalance(balances.CRV) : 'loading...'}</div>
 					</div>
 				</>
 			)}

@@ -11,7 +11,7 @@ export interface blockchainInfoModel {
 
 export const blockchainInfo: blockchainInfoModel[] = [
 	{
-		name: 'ethereum',
+		name: 'etherium',
 		icon: EtheriumIcon,
 		chainId: '0x1',
 		rpcUrl: 'https://mainnet.infura.io/v3/',
