@@ -33,8 +33,8 @@ function Wallet({ className, ...props }: WalletProps): JSX.Element {
 				data: data,
 			});
 
-			const balance = web3.utils.toBigInt(result);
-			return web3.utils.fromWei(balance, 'ether').toString();
+			const balance = web3.utils.toBigInt(result).toString();
+			return web3.utils.fromWei(balance, 'ether');
 		} catch (error) {
 			console.error('Error getting balance', error);
 
